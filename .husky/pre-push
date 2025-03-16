@@ -1,0 +1,8 @@
+echo ++++++++++++++++++++++++++++++++++
+echo 🚀 Running lint/staged...
+echo ++++++++++++++++++++++++++++++++++
+npm run lint:staged
+echo ++++++++++++++++++++++++++++++++++
+echo 🚀 Running test suite...
+echo ++++++++++++++++++++++++++++++++++
+npm run test:once

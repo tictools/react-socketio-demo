@@ -13,6 +13,7 @@
     "lint:staged": "npx lint-staged",
     "preview": "vite preview",
     "test": "vitest",
+    "test:once": "vitest --run",
     "prepare": "husky install"
   },
   "dependencies": {

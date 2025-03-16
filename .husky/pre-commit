@@ -1,1 +1,4 @@
-npm run lint:staged
+echo ++++++++++++++++++++++++++++++++++
+echo 🚀 Running lint/staged...
+echo ++++++++++++++++++++++++++++++++++
+npx lint-staged
