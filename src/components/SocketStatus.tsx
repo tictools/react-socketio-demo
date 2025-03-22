@@ -1,9 +1,6 @@
-import { useSocket } from "../hooks/useSocket";
 import styles from "./SocketStatus.module.css";
 
-export const SocketStatus = () => {
-  const { isConnected } = useSocket();
-
+export const SocketStatus = ({ isConnected }: { isConnected: boolean }) => {
   const paragraphClassName = isConnected
     ? styles["message__content--connected"]
     : styles["message__content--disconnected"];
