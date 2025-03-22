@@ -21,8 +21,41 @@ app.get("/health", (_req, res) => {
   res.json({ status: "ok", message: "socket.io server running..." });
 });
 
-io.on("connection", function (socket) {
-  console.log(`🚀 a user connected${socket.id}`);
+io.on("connection", async function (socket) {
+  console.log(`🚀 a user connected :: ${socket.id}`);
+
+  try {
+    const response = await globalThis.fetch("http://localhost:3000/messages");
+    const data = await response.json();
+
+    socket.emit("firstLoad", { messages: data });
+  } catch {
+    console.log("🚀 ~ Failed to fetch messages");
+  }
+
+  socket.on("clientMessage", async (message) => {
+    try {
+      const response = await globalThis.fetch(
+        "http://localhost:3000/messages",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(message),
+        }
+      );
+
+      const newMessage = await response.json();
+      console.log("🚀 ~ socket.on ~ newMessage:", newMessage);
+
+      io.emit("socketMessage", newMessage);
+    } catch {
+      console.log("🚀 ~ Failed to create message");
+    }
+  });
+
+  socket.on("disconnect", () => {
+    console.log(`🚀 a user disconnected :: ${socket.id}`);
+  });
 });
 
 server.listen(PORT, () => {

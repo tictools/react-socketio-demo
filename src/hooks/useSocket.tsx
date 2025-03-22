@@ -1,28 +1,71 @@
-import { useEffect, useState } from "react";
-import { io } from "socket.io-client";
+import { useCallback, useEffect, useState } from "react";
+import { io, type Socket } from "socket.io-client";
 
 const SOCKET_URL = "http://localhost:8888";
 
+export type Message = {
+  id: number;
+  content: string;
+  timestamp: number;
+};
+
 export const useSocket = () => {
+  const [socket, setSocket] = useState<Socket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
+  const [connectionError, setConnectionError] = useState<string | null>(null);
+  const [messages, setMessages] = useState<Message[]>([]);
+
+  const sendMessage = useCallback(
+    (message: string) => {
+      if (!message || !message.trim()) return;
+
+      if (socket) {
+        socket.emit("clientMessage", {
+          content: `${message} ${socket.id}`,
+          timestamp: Date.now(),
+        });
+      } else {
+        console.error("Socket is not connected");
+      }
+    },
+    [socket]
+  );
 
   useEffect(() => {
-    const socket = io(SOCKET_URL);
+    const socketInstance = io(SOCKET_URL, {
+      reconnectionAttempts: 5,
+      reconnectionDelay: 5000,
+    });
 
-    socket.on("connect", () => {
+    setSocket(socketInstance);
+
+    socketInstance.on("connect", () => {
       setIsConnected(true);
       console.log("✅ Connected to WebSocket server");
     });
 
-    socket.on("disconnect", () => {
+    socketInstance.on("connect_error", () => {
+      setConnectionError("Connection refused");
+    });
+
+    socketInstance.on("firstLoad", (data) => {
+      setMessages(data.messages);
+    });
+
+    socketInstance.on("socketMessage", (newMessage) => {
+      console.log("🚀 ~ socketInstance.on ~ newMessage:", newMessage);
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
+    });
+
+    socketInstance.on("disconnect", () => {
       setIsConnected(false);
       console.log("✅ Disonnected to WebSocket server");
     });
 
     return () => {
-      socket.disconnect();
+      socketInstance.disconnect();
     };
   }, []);
 
-  return { isConnected };
+  return { isConnected, connectionError, messages, sendMessage };
 };
