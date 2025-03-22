@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev:server": "npx json-server ./server/db.json",
+    "dev:server": "npx json-server ./dataServer/db.json",
     "dev:socket": "bun --watch ./socketServer",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
