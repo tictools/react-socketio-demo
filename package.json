@@ -45,6 +45,6 @@
     "vitest": "3.0.8"
   },
   "lint-staged": {
-    "*.js": "eslint --cache --fix"
+    "*.{js,jsx,ts,tsx}": "eslint --cache --fix"
   }
 }
