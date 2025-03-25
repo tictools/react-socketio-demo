@@ -9,7 +9,7 @@ export type Message = {
   timestamp: number;
 };
 
-export const useSocket = () => {
+export const useChat = () => {
   const [socket, setSocket] = useState<Socket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
   const [connectionError, setConnectionError] = useState<string | null>(null);
@@ -21,7 +21,7 @@ export const useSocket = () => {
 
       if (socket) {
         socket.emit("clientMessage", {
-          content: `${message} ${socket.id}`,
+          content: `${message} :: ${socket.id}`,
           timestamp: Date.now(),
         });
       } else {
@@ -53,7 +53,6 @@ export const useSocket = () => {
     });
 
     socketInstance.on("socketMessage", (newMessage) => {
-      console.log("🚀 ~ socketInstance.on ~ newMessage:", newMessage);
       setMessages((prevMessages) => [...prevMessages, newMessage]);
     });
 

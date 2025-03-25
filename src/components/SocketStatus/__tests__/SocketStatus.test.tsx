@@ -1,6 +1,6 @@
 import { cleanup, render } from "@testing-library/react";
 import { afterEach, beforeEach, describe, it, vi } from "vitest";
-import { SocketStatus } from "../components/SocketStatus";
+import { SocketStatus } from "../SocketStatus";
 
 const mockUseSocket = vi.hoisted(() => vi.fn());
 
