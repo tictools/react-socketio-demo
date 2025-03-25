@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { io, type Socket } from "socket.io-client";
 
-const SOCKET_URL = "http://localhost:8888";
+const SOCKET_URL = "/"; // pointing root path due vite proxy config
 
 export type Message = {
   id: number;

@@ -7,4 +7,12 @@ export default defineConfig({
   test: {
     environment: "jsdom",
   },
+  server: {
+    proxy: {
+      "/socket.io": {
+        target: "http://localhost:8888",
+        ws: true,
+      },
+    },
+  },
 });
