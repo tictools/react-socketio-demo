@@ -10,7 +10,7 @@ const mockUseChat = vi.hoisted(() =>
   })
 );
 
-vi.mock("../../../hooks/useChat", () => ({
+vi.mock("../../../hooks/useChat/useChat", () => ({
   useChat: mockUseChat,
 }));
 

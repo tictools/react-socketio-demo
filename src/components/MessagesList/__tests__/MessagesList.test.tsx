@@ -1,11 +1,11 @@
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
 import { beforeEach, describe, expect, test, vi } from "vitest";
-import { Message } from "../../../hooks/useChat";
+import { Message } from "../../../hooks/useChat/useChat";
 import { MessagesList } from "../MessagesList";
 
 const mockUseChat = vi.hoisted(() => vi.fn());
-vi.mock("../../../hooks/useChat", () => ({
+vi.mock("../../../hooks/useChat/useChat", () => ({
   useChat: mockUseChat,
 }));
 

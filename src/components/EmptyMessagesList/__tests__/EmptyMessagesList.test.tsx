@@ -5,7 +5,7 @@ import { EmptyMessagesList } from "../EmptyMessagesList";
 
 const mockUseChat = vi.hoisted(() => vi.fn());
 
-vi.mock("../../../hooks/useChat", () => ({
+vi.mock("../../../hooks/useChat/useChat", () => ({
   useChat: mockUseChat,
 }));
 

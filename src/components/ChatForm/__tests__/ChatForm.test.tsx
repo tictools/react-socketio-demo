@@ -4,7 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { ChatForm } from "../ChatForm";
 
 const mockSendMessage = vi.hoisted(() => vi.fn());
-vi.mock("../../../hooks/useChat", () => ({
+vi.mock("../../../hooks/useChat/useChat", () => ({
   useChat: () => ({
     sendMessage: mockSendMessage,
   }),

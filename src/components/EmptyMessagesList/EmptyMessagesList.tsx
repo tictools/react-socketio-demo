@@ -1,4 +1,4 @@
-import { useChat } from "../../hooks/useChat";
+import { useChat } from "../../hooks/useChat/useChat";
 
 export const EmptyMessagesList = () => {
   const { messages } = useChat();

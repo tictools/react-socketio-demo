@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { io, type Socket } from "socket.io-client";
 
-const SOCKET_URL = "/"; // pointing root path due vite proxy config
+import { SOCKET_EVENT } from "./constants";
+
+const SOCKET_URL = "/"; // defining root path due vite proxy config
 
 export type Message = {
   id: number;
@@ -20,7 +22,7 @@ export const useChat = () => {
       if (!message || !message.trim()) return;
 
       if (socket) {
-        socket.emit("clientMessage", {
+        socket.emit(SOCKET_EVENT.CLIENT_MESSAGE, {
           content: `${message} :: ${socket.id}`,
           timestamp: Date.now(),
         });
@@ -39,26 +41,24 @@ export const useChat = () => {
 
     setSocket(socketInstance);
 
-    socketInstance.on("connect", () => {
+    socketInstance.on(SOCKET_EVENT.CONNECT, () => {
       setIsConnected(true);
-      console.log("✅ Connected to WebSocket server");
     });
 
-    socketInstance.on("connect_error", () => {
+    socketInstance.on(SOCKET_EVENT.CONNECT_ERROR, () => {
       setConnectionError("Connection refused");
     });
 
-    socketInstance.on("firstLoad", (data) => {
+    socketInstance.on(SOCKET_EVENT.FIRST_LOAD, (data) => {
       setMessages(data.messages);
     });
 
-    socketInstance.on("socketMessage", (newMessage) => {
+    socketInstance.on(SOCKET_EVENT.SOCKET_MESSAGE, (newMessage) => {
       setMessages((prevMessages) => [...prevMessages, newMessage]);
     });
 
-    socketInstance.on("disconnect", () => {
+    socketInstance.on(SOCKET_EVENT.DISCONNECT, () => {
       setIsConnected(false);
-      console.log("✅ Disonnected to WebSocket server");
     });
 
     return () => {
