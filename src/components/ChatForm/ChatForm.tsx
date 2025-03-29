@@ -17,8 +17,8 @@ export const ChatForm = () => {
   };
 
   return (
-    <form onSubmit={handleSendMessage}>
-      <input type="text" name="message-content" />
+    <form onSubmit={handleSendMessage} role="form">
+      <input type="text" name="message-content" aria-label="message-content" />
     </form>
   );
 };
