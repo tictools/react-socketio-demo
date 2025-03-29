@@ -6,13 +6,6 @@ export default defineConfig({
   plugins: [react()],
   test: {
     environment: "jsdom",
-  },
-  server: {
-    proxy: {
-      "/socket.io": {
-        target: "http://localhost:8888",
-        ws: true,
-      },
-    },
+    globals: true,
   },
 });
