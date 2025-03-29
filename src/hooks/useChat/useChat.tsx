@@ -3,7 +3,7 @@ import { io, type Socket } from "socket.io-client";
 
 import { SOCKET_EVENT } from "./constants";
 
-const SOCKET_URL = "/"; // defining root path due vite proxy config
+const SOCKET_URL = "http://localhost:8888";
 
 export type Message = {
   id: number;
