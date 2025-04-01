@@ -18,6 +18,7 @@ vi.mock("socket.io-client", () => {
     on: vi.fn(),
     emit: vi.fn(),
     disconnect: vi.fn(),
+    off: vi.fn(),
     id: "mock-socket-id",
   };
   return { io: vi.fn(() => mockSocket) };

@@ -33,6 +33,10 @@ export const useChat = () => {
     [socket]
   );
 
+  const handleMessage = (newMessage) => {
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
+  };
+
   useEffect(() => {
     const socketInstance = io(SOCKET_URL, {
       reconnectionAttempts: 5,
@@ -53,15 +57,14 @@ export const useChat = () => {
       setMessages(data.messages);
     });
 
-    socketInstance.on(SOCKET_EVENT.SOCKET_MESSAGE, (newMessage) => {
-      setMessages((prevMessages) => [...prevMessages, newMessage]);
-    });
+    socketInstance.on(SOCKET_EVENT.SOCKET_MESSAGE, handleMessage);
 
     socketInstance.on(SOCKET_EVENT.DISCONNECT, () => {
       setIsConnected(false);
     });
 
     return () => {
+      socketInstance.off(SOCKET_EVENT.SOCKET_MESSAGE, handleMessage);
       socketInstance.disconnect();
     };
   }, []);
