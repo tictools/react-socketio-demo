@@ -1,6 +1,6 @@
 # react-socketio-demo
 
-This project is to practice implementing sockets in a React application.
+This project is for practicing the implementation of sockets in a React application.
 
 ## Project Requirements
 
@@ -139,3 +139,76 @@ describe("SocketStatus", () => {
 - Run the tests (`npm test`).
 
 When you have completed this, share your solution for review. 🔥
+
+---
+
+## **Step 3: Send and receive messages with persistence**
+
+Now we will add functionality so that clients can send messages through WebSockets, and these messages are saved in `json-server`, ensuring persistence.
+
+### **Goals of this step:**
+
+1️⃣ Add an endpoint to `json-server` to manage messages.  
+2️⃣ Allow the React client to send messages to the WebSocket server.  
+3️⃣ Make the WebSocket server:
+
+- Save the messages to `json-server`.
+- Forward the messages to all connected clients.  
+  4️⃣ Display the stored messages when a client connects.
+
+---
+
+## **Step requirements**
+
+### **1️⃣ Configure `json-server` to store messages**
+
+- Modify `db.json` to include a structure for storing messages.
+- Ensure `json-server` is running correctly.
+
+---
+
+### **2️⃣ Modify the WebSocket server**
+
+- When a client connects, it should receive the list of stored messages.
+- When a client sends a message, the server should:
+  1. Save the message to `json-server`.
+  2. Forward the message to all connected clients.
+
+---
+
+### **3️⃣ Implement a `useChat` hook in the React client**
+
+This hook should:
+
+- Manage the WebSocket connection.
+- Load stored messages upon connection.
+- Listen for new incoming messages.
+- Allow sending messages to the WebSocket server.
+
+---
+
+### **4️⃣ Create a `Chat.tsx` component**
+
+This component should:
+
+- Display the list of messages in real-time.
+- Include a text field for the user to write a message.
+- Send the message when the corresponding button is clicked.
+
+---
+
+### **5️⃣ Add tests with Vitest**
+
+- Verify that the `Chat.tsx` component renders correctly.
+- (Optional) Write tests to ensure messages are displayed correctly.
+
+---
+
+## **Verify it works**
+
+1️⃣ **Run `json-server`** and ensure it is working.  
+2️⃣ **Start the WebSocket server** and verify it accepts connections.  
+3️⃣ **Launch the React application** and check:  
+ ✅ Old messages load correctly.  
+ ✅ New messages are saved and displayed in real-time.  
+ ✅ When one client sends a message, others receive it.
