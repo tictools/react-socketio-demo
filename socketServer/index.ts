@@ -37,7 +37,7 @@ io.on(SOCKET_EVENT.CONNECT, async function (socket) {
     console.log("🚀 ~ Failed to fetch messages");
   }
 
-  socket.on(SOCKET_EVENT.CLIENT_MESSAGE, async (message) => {
+  socket.on(SOCKET_EVENT.CLIENT_MESSAGE, async (message: Message) => {
     try {
       const response = await globalThis.fetch(
         "http://localhost:3000/messages",

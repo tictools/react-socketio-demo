@@ -6,7 +6,7 @@ import { SOCKET_EVENT } from "./constants";
 const SOCKET_URL = "http://localhost:8888";
 
 export type Message = {
-  id: number;
+  id: `${string}-${string}-${string}-${string}-${string}`;
   content: string;
   timestamp: number;
 };
@@ -23,6 +23,7 @@ export const useChat = () => {
 
       if (socket) {
         socket.emit(SOCKET_EVENT.CLIENT_MESSAGE, {
+          id: globalThis.crypto.randomUUID(),
           content: `${message} :: ${socket.id}`,
           timestamp: Date.now(),
         });
