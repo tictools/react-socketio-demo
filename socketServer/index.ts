@@ -2,6 +2,7 @@ import express from "express";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
 import { SOCKET_EVENT } from "../src/hooks/useChat/constants";
+import { type Message } from "../src/hooks/useChat/useChat";
 
 const PORT = 8888;
 
@@ -47,7 +48,7 @@ io.on(SOCKET_EVENT.CONNECT, async function (socket) {
         }
       );
 
-      const newMessage = await response.json();
+      const newMessage = (await response.json()) as Message;
 
       io.emit(SOCKET_EVENT.SOCKET_MESSAGE, newMessage);
     } catch {

@@ -33,7 +33,7 @@ export const useChat = () => {
     [socket]
   );
 
-  const handleMessage = (newMessage) => {
+  const handleMessage = (newMessage: Message) => {
     setMessages((prevMessages) => [...prevMessages, newMessage]);
   };
 
