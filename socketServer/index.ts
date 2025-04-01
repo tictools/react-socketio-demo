@@ -1,6 +1,7 @@
 import express from "express";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
+import { SOCKET_EVENT } from "../src/hooks/useChat/constants";
 
 const PORT = 8888;
 
@@ -23,19 +24,19 @@ app.get("/health", (_req, res) => {
   res.json({ status: "ok", message: "socket.io server running..." });
 });
 
-io.on("connection", async function (socket) {
+io.on(SOCKET_EVENT.CONNECT, async function (socket) {
   console.log(`🚀 a user connected :: ${socket.id}`);
 
   try {
     const response = await globalThis.fetch(`${BASE_URL}/messages`);
     const data = await response.json();
 
-    socket.emit("firstLoad", { messages: data });
+    socket.emit(SOCKET_EVENT.FIRST_LOAD, { messages: data });
   } catch {
     console.log("🚀 ~ Failed to fetch messages");
   }
 
-  socket.on("clientMessage", async (message) => {
+  socket.on(SOCKET_EVENT.CLIENT_MESSAGE, async (message) => {
     try {
       const response = await globalThis.fetch(
         "http://localhost:3000/messages",
@@ -47,15 +48,14 @@ io.on("connection", async function (socket) {
       );
 
       const newMessage = await response.json();
-      console.log("🚀 ~ socket.on ~ newMessage:", newMessage);
 
-      io.emit("socketMessage", newMessage);
+      io.emit(SOCKET_EVENT.SOCKET_MESSAGE, newMessage);
     } catch {
       console.log("🚀 ~ Failed to create message");
     }
   });
 
-  socket.on("disconnect", () => {
+  socket.on(SOCKET_EVENT.DISCONNECT, () => {
     console.log(`🚀 a user disconnected :: ${socket.id}`);
   });
 });
