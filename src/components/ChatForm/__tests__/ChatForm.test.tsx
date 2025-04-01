@@ -27,6 +27,14 @@ describe("ChatForm", () => {
     expect(input).toBeInTheDocument();
   });
 
+  it("should render the submit button", () => {
+    const { getByRole } = render(<ChatForm />);
+
+    const input = getByRole("button", { name: /send/i });
+
+    expect(input).toBeInTheDocument();
+  });
+
   it("should call sendMessage with the correct message when submitting the form", () => {
     const { getByRole } = render(<ChatForm />);
 
