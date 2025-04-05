@@ -31,7 +31,7 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
   const handleError = () => setConnectionError("Connection refused");
   const handleFirstLoad = ({ messages }: { messages: Message[] }) =>
     setMessages(messages);
-  const handleMessage = (newMessage: Message) =>
+  const handleSocketMessage = (newMessage: Message) =>
     setMessages((prev) => [...prev, newMessage]);
 
   useEffect(() => {
@@ -45,20 +45,20 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
     socketRef.current.on(SOCKET_EVENT.CONNECT, handleConnect);
     socketRef.current.on(SOCKET_EVENT.CONNECT_ERROR, handleError);
     socketRef.current.on(SOCKET_EVENT.FIRST_LOAD, handleFirstLoad);
-    socketRef.current.on(SOCKET_EVENT.SOCKET_MESSAGE, handleMessage);
+    socketRef.current.on(SOCKET_EVENT.SOCKET_MESSAGE, handleSocketMessage);
     socketRef.current.on(SOCKET_EVENT.DISCONNECT, handleDisconnect);
 
     return () => {
-      if (socketRef.current) {
-        socketRef.current.off(SOCKET_EVENT.CONNECT, handleConnect);
-        socketRef.current.off(SOCKET_EVENT.CONNECT_ERROR, handleError);
-        socketRef.current.off(SOCKET_EVENT.FIRST_LOAD, handleFirstLoad);
-        socketRef.current.off(SOCKET_EVENT.SOCKET_MESSAGE, handleMessage);
-        socketRef.current.off(SOCKET_EVENT.DISCONNECT, handleDisconnect);
+      if (!socketRef.current) return;
 
-        socketRef.current.disconnect();
-        socketRef.current = null;
-      }
+      socketRef.current.off(SOCKET_EVENT.CONNECT, handleConnect);
+      socketRef.current.off(SOCKET_EVENT.CONNECT_ERROR, handleError);
+      socketRef.current.off(SOCKET_EVENT.FIRST_LOAD, handleFirstLoad);
+      socketRef.current.off(SOCKET_EVENT.SOCKET_MESSAGE, handleSocketMessage);
+      socketRef.current.off(SOCKET_EVENT.DISCONNECT, handleDisconnect);
+
+      socketRef.current.disconnect();
+      socketRef.current = null;
     };
   }, []);
 
