@@ -1,8 +1,8 @@
 import express from "express";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
-import { SOCKET_EVENT } from "../src/hooks/useChat/constants";
-import { type Message } from "../src/hooks/useChat/useChat";
+import { SOCKET_EVENT } from "../src/contexts/Chat/constants";
+import { type Message } from "../src/contexts/Chat/hooks/useChat/useChat";
 
 const PORT = 8888;
 
@@ -29,10 +29,22 @@ io.on(SOCKET_EVENT.CONNECT, async function (socket) {
   console.log(`🚀 a user connected :: ${socket.id}`);
 
   try {
-    const response = await globalThis.fetch(`${BASE_URL}/messages`);
-    const data = await response.json();
+    const newUserResponse = await globalThis.fetch(`${BASE_URL}/users`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: socket.id, name: "foo" }),
+    });
+    const newUser = await newUserResponse.json();
 
-    socket.emit(SOCKET_EVENT.FIRST_LOAD, { messages: data });
+    const initialMessagesResponse = await globalThis.fetch(
+      `${BASE_URL}/messages`
+    );
+    const initialMessages = await initialMessagesResponse.json();
+
+    socket.emit(SOCKET_EVENT.FIRST_LOAD, {
+      messages: initialMessages,
+      user: newUser,
+    });
   } catch {
     console.log("🚀 ~ Failed to fetch messages");
   }

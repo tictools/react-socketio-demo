@@ -1,36 +1,48 @@
 import "@testing-library/jest-dom";
-import { render } from "@testing-library/react";
-import { beforeEach, describe, expect, test, vi } from "vitest";
-import { Message } from "../../../hooks/useChat/useChat";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
+import type {
+  ChatContextType,
+  Message,
+} from "../../../contexts/Chat/hooks/useChat/useChat";
+import { renderWithChatProvider } from "../../../test-utils/renderWithChatProvider/renderWithChatProvider";
 import { MessagesList } from "../MessagesList";
 
 const mockUseChat = vi.hoisted(() => vi.fn());
-vi.mock("../../../hooks/useChat/useChat", () => ({
-  useChat: mockUseChat,
-}));
+vi.mock(
+  "../../../contexts/Chat/hooks/useChat/useChat",
+  async (importActual) => {
+    const actual: { useChat: () => ChatContextType } = await importActual();
+
+    return {
+      ...actual,
+      useChat: mockUseChat,
+    };
+  }
+);
 
 describe("MessagesList", () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  test("does not render anything when there are no messages", () => {
+  it("does not render anything when there are no messages", () => {
     mockUseChat.mockReturnValueOnce({ messages: [] });
 
-    const { queryByText } = render(<MessagesList />);
+    const { queryByText } = renderWithChatProvider(<MessagesList />);
 
     expect(queryByText("⏰")).not.toBeInTheDocument();
   });
 
-  test("renders a list of messages", () => {
+  it("renders a list of messages", () => {
     const messages: Message[] = [
       {
-        id: 1,
+        id: "1085d098-2f08-4a90-989c-eefc66c047a3",
         content: "Hello!",
         timestamp: new Date("2024-03-28T12:00:00Z").getTime(), // 1711627200000
       },
       {
-        id: 2,
+        id: "d01fab40-e5a2-4b08-93d3-600ab30f83a5",
         content: "How are you?",
         timestamp: new Date("2024-03-28T12:05:00Z").getTime(), //1711627200000
       },
@@ -38,7 +50,7 @@ describe("MessagesList", () => {
 
     mockUseChat.mockReturnValueOnce({ messages });
 
-    const { getByText } = render(<MessagesList />);
+    const { getByText } = renderWithChatProvider(<MessagesList />);
 
     expect(getByText(/hello!/i)).toBeInTheDocument();
     expect(getByText("1711627200000")).toBeInTheDocument();
