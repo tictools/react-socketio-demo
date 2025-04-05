@@ -1,4 +1,7 @@
-import { Message, useChat } from "../../hooks/useChat/useChat";
+import {
+  useChat,
+  type Message,
+} from "../../contexts/Chat/hooks/useChat/useChat";
 
 export const MessagesList = () => {
   const { messages } = useChat();

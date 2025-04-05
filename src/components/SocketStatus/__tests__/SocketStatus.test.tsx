@@ -1,6 +1,9 @@
 import "@testing-library/jest-dom";
-import { cleanup, render } from "@testing-library/react";
+import { cleanup } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+
+import { ChatContextType } from "../../../contexts/Chat/hooks/useChat/useChat";
+import { renderWithChatProvider } from "../../../test-utils/renderWithChatProvider/renderWithChatProvider";
 import { SocketStatus } from "../SocketStatus";
 
 const mockUseChat = vi.hoisted(() =>
@@ -10,9 +13,16 @@ const mockUseChat = vi.hoisted(() =>
   })
 );
 
-vi.mock("../../../hooks/useChat/useChat", () => ({
-  useChat: mockUseChat,
-}));
+vi.mock(
+  "../../../contexts/Chat/hooks/useChat/useChat",
+  async (importActual) => {
+    const actual: { useChat: () => ChatContextType } = await importActual();
+    return {
+      ...actual,
+      useChat: mockUseChat,
+    };
+  }
+);
 
 describe("SocketStatus", () => {
   beforeEach(() => {
@@ -21,7 +31,7 @@ describe("SocketStatus", () => {
   });
 
   it("should display the text 'WebSocket Status:'", async () => {
-    const { findByText } = render(<SocketStatus />);
+    const { findByText } = renderWithChatProvider(<SocketStatus />);
 
     expect(await findByText("WebSocket Status:")).toBeInTheDocument();
   });
@@ -32,7 +42,9 @@ describe("SocketStatus", () => {
       connectionError: "connection__error",
     });
 
-    const { findByText, queryByText } = render(<SocketStatus />);
+    const { findByText, queryByText } = renderWithChatProvider(
+      <SocketStatus />
+    );
 
     expect(await findByText(/connection error/i)).toBeInTheDocument();
     const heading = queryByText("WebSocket Status:");
@@ -40,7 +52,7 @@ describe("SocketStatus", () => {
   });
 
   it("should display 'Connected ✅' when connected", async () => {
-    const { findByText } = render(<SocketStatus />);
+    const { findByText } = renderWithChatProvider(<SocketStatus />);
 
     expect(await findByText("Connected ✅")).toBeInTheDocument();
   });
@@ -51,7 +63,7 @@ describe("SocketStatus", () => {
       connectionError: null,
     });
 
-    const { findByText } = render(<SocketStatus />);
+    const { findByText } = renderWithChatProvider(<SocketStatus />);
 
     expect(await findByText("Disconnected ❌")).toBeInTheDocument();
   });
