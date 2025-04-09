@@ -1,5 +1,10 @@
 import { createContext, useContext } from "react";
 
+export type User = {
+  id: `${string}-${string}-${string}-${string}-${string}`;
+  name: string;
+};
+
 export type Message = {
   id: `${string}-${string}-${string}-${string}-${string}`;
   content: string;
@@ -10,6 +15,7 @@ export type ChatContextType = {
   isConnected: boolean;
   connectionError: string | null;
   messages: Message[];
+  user: User | null;
   sendMessage: (message: string) => void;
 };
 
