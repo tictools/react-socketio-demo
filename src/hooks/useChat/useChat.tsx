@@ -9,6 +9,7 @@ export type Message = {
   id: `${string}-${string}-${string}-${string}-${string}`;
   content: string;
   timestamp: number;
+  userId: `${string}-${string}-${string}-${string}-${string}`;
 };
 
 export type ChatContextType = {
