@@ -1,25 +1,22 @@
 import "@testing-library/jest-dom";
-import userEvent, { UserEvent } from "@testing-library/user-event";
+import userEvent, { type UserEvent } from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { ChatContextType } from "../../../contexts/Chat/hooks/useChat/useChat";
+import { ChatContextType } from "../../../hooks/useChat/useChat";
 import { renderWithChatProvider } from "../../../test-utils/renderWithChatProvider/renderWithChatProvider";
 import { ChatForm } from "../ChatForm";
 
 const mockSendMessage = vi.hoisted(() => vi.fn());
-vi.mock(
-  "../../../contexts/Chat/hooks/useChat/useChat",
-  async (importActual) => {
-    const actual: { useChat: () => ChatContextType } = await importActual();
+vi.mock("../../../hooks/useChat/useChat", async (importActual) => {
+  const actual: { useChat: () => ChatContextType } = await importActual();
 
-    return {
-      ...actual,
-      useChat: () => ({
-        sendMessage: mockSendMessage,
-      }),
-    };
-  }
-);
+  return {
+    ...actual,
+    useChat: () => ({
+      sendMessage: mockSendMessage,
+    }),
+  };
+});
 
 describe("ChatForm", () => {
   let user: UserEvent;

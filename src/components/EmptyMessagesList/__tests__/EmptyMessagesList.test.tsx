@@ -1,22 +1,19 @@
 import "@testing-library/jest-dom";
 import { screen } from "@testing-library/react";
 import { describe, expect, test, vi } from "vitest";
-import { type ChatContextType } from "../../../contexts/Chat/hooks/useChat/useChat";
+import { type ChatContextType } from "../../../hooks/useChat/useChat";
 import { renderWithChatProvider } from "../../../test-utils/renderWithChatProvider/renderWithChatProvider";
 import { EmptyMessagesList } from "../EmptyMessagesList";
 
 const mockUseChat = vi.hoisted(() => vi.fn());
 
-vi.mock(
-  "../../../contexts/Chat/hooks/useChat/useChat",
-  async (importActual) => {
-    const actual: { useChat: () => ChatContextType } = await importActual();
-    return {
-      ...actual,
-      useChat: mockUseChat,
-    };
-  }
-);
+vi.mock("../../../hooks/useChat/useChat", async (importActual) => {
+  const actual: { useChat: () => ChatContextType } = await importActual();
+  return {
+    ...actual,
+    useChat: mockUseChat,
+  };
+});
 
 describe("EmptyMessagesList", () => {
   test("displays 'No messages' when there are no messages", () => {

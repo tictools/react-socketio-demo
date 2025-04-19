@@ -2,7 +2,7 @@ import "@testing-library/jest-dom";
 import { cleanup } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { ChatContextType } from "../../../contexts/Chat/hooks/useChat/useChat";
+import { ChatContextType } from "../../../hooks/useChat/useChat";
 import { renderWithChatProvider } from "../../../test-utils/renderWithChatProvider/renderWithChatProvider";
 import { SocketStatus } from "../SocketStatus";
 
@@ -13,16 +13,13 @@ const mockUseChat = vi.hoisted(() =>
   })
 );
 
-vi.mock(
-  "../../../contexts/Chat/hooks/useChat/useChat",
-  async (importActual) => {
-    const actual: { useChat: () => ChatContextType } = await importActual();
-    return {
-      ...actual,
-      useChat: mockUseChat,
-    };
-  }
-);
+vi.mock("../../../hooks/useChat/useChat", async (importActual) => {
+  const actual: { useChat: () => ChatContextType } = await importActual();
+  return {
+    ...actual,
+    useChat: mockUseChat,
+  };
+});
 
 describe("SocketStatus", () => {
   beforeEach(() => {

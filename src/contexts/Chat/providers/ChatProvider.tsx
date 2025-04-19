@@ -1,7 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { io, type Socket } from "socket.io-client";
+import {
+  ChatContext,
+  User,
+  type Message,
+} from "../../../hooks/useChat/useChat";
 import { SOCKET_EVENT } from "../constants";
-import { ChatContext, User, type Message } from "../hooks/useChat/useChat";
 
 const SOCKET_URL = "http://localhost:8888";
 

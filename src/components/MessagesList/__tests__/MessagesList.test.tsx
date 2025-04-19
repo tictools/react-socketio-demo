@@ -1,25 +1,19 @@
 import "@testing-library/jest-dom";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import type {
-  ChatContextType,
-  Message,
-} from "../../../contexts/Chat/hooks/useChat/useChat";
+import type { ChatContextType, Message } from "../../../hooks/useChat/useChat";
 import { renderWithChatProvider } from "../../../test-utils/renderWithChatProvider/renderWithChatProvider";
 import { MessagesList } from "../MessagesList";
 
 const mockUseChat = vi.hoisted(() => vi.fn());
-vi.mock(
-  "../../../contexts/Chat/hooks/useChat/useChat",
-  async (importActual) => {
-    const actual: { useChat: () => ChatContextType } = await importActual();
+vi.mock("../../../hooks/useChat/useChat", async (importActual) => {
+  const actual: { useChat: () => ChatContextType } = await importActual();
 
-    return {
-      ...actual,
-      useChat: mockUseChat,
-    };
-  }
-);
+  return {
+    ...actual,
+    useChat: mockUseChat,
+  };
+});
 
 describe("MessagesList", () => {
   beforeEach(() => {

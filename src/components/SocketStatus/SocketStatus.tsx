@@ -1,4 +1,4 @@
-import { useChat } from "../../contexts/Chat/hooks/useChat/useChat";
+import { useChat } from "../../hooks/useChat/useChat";
 import { SocketStatusError } from "../SocketStatusError/SocketStatusError";
 
 import styles from "./SocketStatus.module.css";
