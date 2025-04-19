@@ -2,7 +2,7 @@ import express from "express";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
 import { SOCKET_EVENT } from "../src/contexts/Chat/constants";
-import type { Message, User } from "../src/contexts/Chat/hooks/useChat/useChat";
+import type { Message, User } from "../src/hooks/useChat/useChat";
 
 const PORT = 8888;
 
