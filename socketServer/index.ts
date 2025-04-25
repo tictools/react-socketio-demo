@@ -3,6 +3,7 @@ import { createServer } from "node:http";
 import { Server } from "socket.io";
 import { SOCKET_EVENT } from "../src/contexts/Chat/constants";
 import type { Message, User } from "../src/hooks/useChat/useChat";
+import { createRandomName } from "./utils/createRandomName";
 
 const PORT = 8888;
 
@@ -48,7 +49,7 @@ io.on(SOCKET_EVENT.CONNECT, async function (socket) {
       const newUserResponse = await globalThis.fetch(`${BASE_URL}/users`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: socket.id, name: `User: ${socket.id}` }),
+        body: JSON.stringify({ id: socket.id, name: createRandomName() }),
       });
 
       userDTO = (await newUserResponse.json()) as User;
