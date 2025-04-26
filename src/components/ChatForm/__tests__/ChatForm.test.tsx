@@ -1,4 +1,3 @@
-import "@testing-library/jest-dom";
 import userEvent, { type UserEvent } from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 

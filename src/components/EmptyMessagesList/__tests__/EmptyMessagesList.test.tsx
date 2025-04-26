@@ -1,4 +1,3 @@
-import "@testing-library/jest-dom";
 import { screen } from "@testing-library/react";
 import { describe, expect, test, vi } from "vitest";
 import { type ChatContextType } from "../../../hooks/useChat/useChat";

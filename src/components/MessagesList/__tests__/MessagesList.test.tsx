@@ -1,4 +1,3 @@
-import "@testing-library/jest-dom";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { ChatContextType, Message } from "../../../hooks/useChat/useChat";
