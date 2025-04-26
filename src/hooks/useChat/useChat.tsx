@@ -3,6 +3,7 @@ import { createContext, useContext } from "react";
 export type User = {
   id: `${string}-${string}-${string}-${string}-${string}`;
   name: string;
+  avatar: string;
 };
 
 export type Message = {

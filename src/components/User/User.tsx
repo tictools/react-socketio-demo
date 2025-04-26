@@ -3,5 +3,11 @@ import { useChat } from "../../hooks/useChat/useChat";
 export const User = () => {
   const { user } = useChat();
 
-  return <p>👋 Welcome {user?.name ?? "unknown user"}!</p>;
+  return (
+    <section>
+      <p>
+        <span>{user?.avatar}</span> {user?.name ?? "unknown user"}!
+      </p>
+    </section>
+  );
 };

@@ -1,4 +1,4 @@
-export function createRandomName() {
+export const createRandomName = () => {
   const adjectives = ["Curious", "Brave", "Silent", "Happy", "Swift"];
   const animals = ["Fox", "Tiger", "Koala", "Dolphin", "Owl"];
 
@@ -6,4 +6,4 @@ export function createRandomName() {
   const animal = animals[Math.floor(Math.random() * animals.length)];
 
   return `${prefix} ${animal}`;
-}
+};
