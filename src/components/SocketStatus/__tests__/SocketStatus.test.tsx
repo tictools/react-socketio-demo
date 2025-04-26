@@ -26,10 +26,10 @@ describe("SocketStatus", () => {
     vi.clearAllMocks();
   });
 
-  it("should display the text 'WebSocket Status:'", async () => {
+  it("should display the text 'status:'", async () => {
     const { findByText } = renderWithChatProvider(<SocketStatus />);
 
-    expect(await findByText("WebSocket Status:")).toBeInTheDocument();
+    expect(await findByText("status:")).toBeInTheDocument();
   });
 
   it("should display the text '🚨 Connection error 🚨:' when connection is errored", async () => {
@@ -47,13 +47,13 @@ describe("SocketStatus", () => {
     expect(heading).not.toBeInTheDocument();
   });
 
-  it("should display 'Connected ✅' when connected", async () => {
+  it("should display '✅' when connected", async () => {
     const { findByText } = renderWithChatProvider(<SocketStatus />);
 
-    expect(await findByText("Connected ✅")).toBeInTheDocument();
+    expect(await findByText("✅")).toBeInTheDocument();
   });
 
-  it("should display 'Disconnected ❌' when not connected", async () => {
+  it("should display '❌' when not connected", async () => {
     mockUseChat.mockReturnValueOnce({
       isConnected: false,
       connectionError: null,
@@ -61,6 +61,6 @@ describe("SocketStatus", () => {
 
     const { findByText } = renderWithChatProvider(<SocketStatus />);
 
-    expect(await findByText("Disconnected ❌")).toBeInTheDocument();
+    expect(await findByText("❌")).toBeInTheDocument();
   });
 });

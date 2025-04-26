@@ -15,11 +15,13 @@ export const SocketStatus = () => {
     : styles["message__content--disconnected"];
 
   return (
-    <div>
-      <h2>WebSocket Status:</h2>
-      <span className={paragraphClassName}>
-        {isConnected ? "Connected ✅" : "Disconnected ❌"}
-      </span>
-    </div>
+    <section>
+      <p>
+        status:
+        <span className={paragraphClassName}>
+          {isConnected ? " ✅" : "  ❌"}
+        </span>
+      </p>
+    </section>
   );
 };
