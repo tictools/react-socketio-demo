@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { ChatContextType } from "../../../hooks/useChat/useChat";
 import { renderWithChatProvider } from "../../../test-utils/renderWithChatProvider/renderWithChatProvider";
-import { SocketStatus } from "../SocketStatus";
+import { UserStatus } from "../UserStatus";
 
 const mockUseChat = vi.hoisted(() =>
   vi.fn().mockReturnValue({
@@ -27,7 +27,7 @@ describe("SocketStatus", () => {
   });
 
   it("should display the text 'status:'", async () => {
-    const { findByText } = renderWithChatProvider(<SocketStatus />);
+    const { findByText } = renderWithChatProvider(<UserStatus />);
 
     expect(await findByText("status:")).toBeInTheDocument();
   });
@@ -38,9 +38,7 @@ describe("SocketStatus", () => {
       connectionError: "connection__error",
     });
 
-    const { findByText, queryByText } = renderWithChatProvider(
-      <SocketStatus />
-    );
+    const { findByText, queryByText } = renderWithChatProvider(<UserStatus />);
 
     expect(await findByText(/connection error/i)).toBeInTheDocument();
     const heading = queryByText("WebSocket Status:");
@@ -48,7 +46,7 @@ describe("SocketStatus", () => {
   });
 
   it("should display '✅' when connected", async () => {
-    const { findByText } = renderWithChatProvider(<SocketStatus />);
+    const { findByText } = renderWithChatProvider(<UserStatus />);
 
     expect(await findByText("✅")).toBeInTheDocument();
   });
@@ -59,7 +57,7 @@ describe("SocketStatus", () => {
       connectionError: null,
     });
 
-    const { findByText } = renderWithChatProvider(<SocketStatus />);
+    const { findByText } = renderWithChatProvider(<UserStatus />);
 
     expect(await findByText("❌")).toBeInTheDocument();
   });

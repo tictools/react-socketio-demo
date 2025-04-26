@@ -1,8 +1,7 @@
 import "./App.css";
 import { Chat } from "./components/Chat/Chat";
 import { ChatHeading } from "./components/ChatHeading/ChatHeading";
-import { SocketStatus } from "./components/SocketStatus/SocketStatus";
-import { User } from "./components/User/User";
+import { UserData } from "./components/UserData/UserData";
 import { ChatProvider } from "./contexts/Chat/providers/ChatProvider";
 
 function App() {
@@ -10,8 +9,7 @@ function App() {
     <>
       <ChatProvider>
         <ChatHeading />
-        <User />
-        <SocketStatus />
+        <UserData />
         <Chat />
       </ChatProvider>
     </>

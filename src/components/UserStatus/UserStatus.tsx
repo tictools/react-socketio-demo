@@ -1,9 +1,9 @@
 import { useChat } from "../../hooks/useChat/useChat";
 import { SocketStatusError } from "../SocketStatusError/SocketStatusError";
 
-import styles from "./SocketStatus.module.css";
+import styles from "./UserStatus.module.css";
 
-export const SocketStatus = () => {
+export const UserStatus = () => {
   const { isConnected, connectionError } = useChat();
 
   if (connectionError) {
@@ -15,13 +15,9 @@ export const SocketStatus = () => {
     : styles["message__content--disconnected"];
 
   return (
-    <section>
-      <p>
-        status:
-        <span className={paragraphClassName}>
-          {isConnected ? " ✅" : "  ❌"}
-        </span>
-      </p>
-    </section>
+    <p>
+      status:
+      <span className={paragraphClassName}>{isConnected ? " ✅" : "  ❌"}</span>
+    </p>
   );
 };
