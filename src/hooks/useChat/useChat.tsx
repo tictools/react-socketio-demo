@@ -10,6 +10,7 @@ export type Message = {
   content: string;
   timestamp: number;
   userId: `${string}-${string}-${string}-${string}-${string}`;
+  fromMe: boolean;
 };
 
 export type ChatContextType = {
