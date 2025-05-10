@@ -3,7 +3,6 @@ import { describe, expect, it, vi } from "vitest";
 import { Message } from "../../../hooks/useChat/useChat";
 import { MessageItem } from "../MessageItem";
 
-// Mock the formatDateTime service to control the output
 vi.mock("../../../services/Date/formatDateTime", () => ({
   formatDateTime: vi.fn().mockReturnValue("mocked-time"),
 }));

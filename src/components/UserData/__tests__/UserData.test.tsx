@@ -1,9 +1,9 @@
 import { cleanup } from "@testing-library/react";
 import { beforeEach, describe, it, vi } from "vitest";
+
 import { ChatContextType } from "../../../hooks/useChat/useChat";
 import { renderWithChatProvider } from "../../../test-utils/renderWithChatProvider/renderWithChatProvider";
 import { UserData } from "../UserData";
-// import { useChat } from "../../../hooks/useChat/useChat";
 
 const mockUseChat = vi.hoisted(() =>
   vi.fn().mockReturnValue({
