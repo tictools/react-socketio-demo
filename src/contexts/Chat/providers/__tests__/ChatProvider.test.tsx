@@ -1,14 +1,13 @@
 import { useState } from "react";
 
-import "@testing-library/jest-dom";
 import { act, render, screen } from "@testing-library/react";
 import userEvent, { type UserEvent } from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { io } from "socket.io-client";
 
+import { useChat } from "../../../../hooks/useChat/useChat";
 import { SOCKET_EVENT } from "../../constants";
-import { useChat } from "../../hooks/useChat/useChat";
 import { ChatProvider } from "../ChatProvider";
 
 type EventCallback = (payload?: unknown) => void;

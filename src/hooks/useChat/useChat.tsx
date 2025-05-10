@@ -3,12 +3,15 @@ import { createContext, useContext } from "react";
 export type User = {
   id: `${string}-${string}-${string}-${string}-${string}`;
   name: string;
+  avatar: string;
 };
 
 export type Message = {
   id: `${string}-${string}-${string}-${string}-${string}`;
   content: string;
   timestamp: number;
+  userId: `${string}-${string}-${string}-${string}-${string}`;
+  fromMe: boolean;
 };
 
 export type ChatContextType = {

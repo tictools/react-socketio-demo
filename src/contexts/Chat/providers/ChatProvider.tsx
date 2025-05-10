@@ -1,12 +1,19 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { io, type Socket } from "socket.io-client";
+import {
+  ChatContext,
+  User,
+  type Message,
+} from "../../../hooks/useChat/useChat";
 import { SOCKET_EVENT } from "../constants";
-import { ChatContext, User, type Message } from "../hooks/useChat/useChat";
 
 const SOCKET_URL = "http://localhost:8888";
 
 export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
   const socketRef = useRef<Socket | null>(null);
+  //use this ref to ensure it is available for event callbacks
+  // using user state  will make its value to be undefined in its lexical scope when callback is invoked
+  const userRef = useRef<User | null>(null);
 
   const [isConnected, setIsConnected] = useState(false);
   const [connectionError, setConnectionError] = useState<string | null>(null);
@@ -53,7 +60,17 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const handleSocketMessage = (newMessage: Message) =>
-    setMessages((prev) => [...prev, newMessage]);
+    setMessages((prev) => [
+      ...prev,
+      {
+        ...newMessage,
+        fromMe: newMessage.userId === userRef.current?.id,
+      },
+    ]);
+
+  useEffect(() => {
+    userRef.current = user;
+  }, [user]);
 
   useEffect(() => {
     if (socketRef.current) return;
@@ -78,7 +95,6 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
       socketRef.current.off(SOCKET_EVENT.FIRST_LOAD, handleFirstLoad);
       socketRef.current.off(SOCKET_EVENT.SOCKET_MESSAGE, handleSocketMessage);
       socketRef.current.off(SOCKET_EVENT.DISCONNECT, handleDisconnect);
-
       socketRef.current.disconnect();
       socketRef.current = null;
     };
