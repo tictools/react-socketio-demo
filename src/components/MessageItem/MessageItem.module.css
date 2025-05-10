@@ -1,0 +1,68 @@
+.messages__item {
+  max-width: 70%;
+  padding: 8px 12px;
+  border-radius: 7.5px;
+  position: relative;
+  word-wrap: break-word;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 1px 0.5px var(--shadow-color);
+  color: var(--message-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.messages__content {
+  margin: 0;
+  padding: 0;
+}
+
+.messages__item--sent {
+  align-self: flex-end;
+  background-color: var(--sent-bg);
+  border-top-right-radius: 0;
+}
+
+.messages__item--received {
+  align-self: flex-start;
+  background-color: var(--received-bg);
+  border-top-left-radius: 0;
+}
+
+.messages__item--sent::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -10px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid var(--sent-bg);
+  border-bottom: 10px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.messages__item--received::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -10px;
+  width: 0;
+  height: 0;
+  border-right: 10px solid var(--received-bg);
+  border-bottom: 10px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.messages__timestamp {
+  font-size: 0.7rem;
+  color: var(--timestamp-color);
+  margin-top: 5px;
+  align-self: flex-end;
+  transition: color 0.3s ease;
+}
+
+.messages__empty-state {
+  text-align: center;
+  color: var(--message-text);
+  padding: 20px;
+  opacity: 0.7;
+}

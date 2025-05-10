@@ -1,4 +1,5 @@
 import { useChat, type Message } from "../../hooks/useChat/useChat";
+import { MessageItem } from "../MessageItem/MessageItem";
 import styles from "./MessagesList.module.css";
 
 export const MessagesList = () => {
@@ -9,19 +10,7 @@ export const MessagesList = () => {
   return (
     <ul className={styles["messages__list"]}>
       {messages.map((message: Message) => (
-        <li
-          key={message.id}
-          className={`${styles["messages__item"]} ${
-            message.fromMe
-              ? styles["messages__item--sent"]
-              : styles["messages__item--received"]
-          }`}
-        >
-          <p className={styles["messages__content"]}>{message.content}</p>
-          <span className={styles["messages__timestamp"]}>
-            {message.timestamp}
-          </span>
-        </li>
+        <MessageItem key={message.id} message={message} />
       ))}
     </ul>
   );
